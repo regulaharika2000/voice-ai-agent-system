@@ -19,7 +19,6 @@ app.add_middleware(
 )
 
 current_task = None
-
 from fastapi import FastAPI
 
 app = FastAPI()
@@ -27,6 +26,7 @@ app = FastAPI()
 @app.get("/")
 def health():
     return {"status": "running 🚀"}
+
 
 from fastapi import FastAPI, WebSocket
 
@@ -38,16 +38,10 @@ async def websocket_endpoint(websocket: WebSocket):
     print("🔌 WebSocket connected")
 
     while True:
-        try:
-            msg = await websocket.receive_text()
-            print("📡 INPUT:", msg)
-
-            reply = f"Echo: {msg}"
-            await websocket.send_text(reply)
-
-        except Exception as e:
-            print("❌ WebSocket error:", e)
-            break
+    try:
+        msg = await websocket.receive_text()
+        await websocket.send_text(msg)
 
     except Exception as e:
-        print("ERROR:", e)
+        print(e)
+        break
