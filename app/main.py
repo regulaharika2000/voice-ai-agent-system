@@ -20,6 +20,13 @@ app.add_middleware(
 
 current_task = None
 
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def health():
+    return {"status": "running 🚀"}
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
