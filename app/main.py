@@ -28,28 +28,26 @@ app = FastAPI()
 def health():
     return {"status": "running 🚀"}
 
+from fastapi import FastAPI, WebSocket
+
+app = FastAPI()
+
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
+    print("🔌 WebSocket connected")
 
-    try:
-        while True:
-
+    while True:
+        try:
             msg = await websocket.receive_text()
+            print("📡 INPUT:", msg)
 
-            trace_id = log_request(msg, "session1")
-
-            start = time.perf_counter()
-
-            reply = run_agent(msg, session_id="session1")
-
+            reply = f"Echo: {msg}"
             await websocket.send_text(reply)
 
-            end = time.perf_counter()
-
-            latency = (end - start) * 1000
-
-            log_response(trace_id, reply, latency)
+        except Exception as e:
+            print("❌ WebSocket error:", e)
+            break
 
     except Exception as e:
         print("ERROR:", e)
