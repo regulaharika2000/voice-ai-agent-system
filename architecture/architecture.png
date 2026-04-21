@@ -1,0 +1,50 @@
+
+---
+
+# 🧠 2. WHAT YOUR `architecture.png` MUST CONTAIN
+
+This is VERY IMPORTANT for evaluation.
+
+---
+
+## 🎯 DRAW THIS FLOW (YOU CAN USE diagrams.net / Excalidraw)
+
+---
+
+## 🏗️ ARCHITECTURE STRUCTURE
+
+```text
+             ┌──────────────────────┐
+             │   Frontend (HTML)    │
+             │ Voice / Text Input   │
+             └─────────┬────────────┘
+                       │ WebSocket
+                       ▼
+         ┌─────────────────────────────┐
+         │     FastAPI WebSocket       │
+         │   Real-time Gateway Layer   │
+         └──────────┬──────────────────┘
+                    │
+                    ▼
+         ┌─────────────────────────────┐
+         │     Orchestrator (Agent)    │
+         │  - Intent Detection         │
+         │  - Mock LLM Engine          │
+         └──────────┬──────────────────┘
+                    │
+     ┌──────────────┼──────────────────┐
+     ▼              ▼                  ▼
+┌─────────┐  ┌────────────┐   ┌─────────────┐
+│ Tools   │  │ Memory     │   │ Scheduler   │
+│ Layer   │  │ Session    │   │ Engine      │
+└─────────┘  └────────────┘   └─────────────┘
+     │              │                  │
+     └──────────────┴──────────────────┘
+                    ▼
+         ┌─────────────────────────────┐
+         │     Response Generator      │
+         └──────────┬──────────────────┘
+                    ▼
+         ┌─────────────────────────────┐
+         │   WebSocket Response        │
+         └─────────────────────────────┘

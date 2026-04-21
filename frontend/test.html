@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voice AI Mock</title>
+</head>
+<body>
+
+<h2>AI Agent Test (No Billing)</h2>
+
+<button onclick="connect()">Connect</button>
+<button onclick="sendMsg()">Send</button>
+
+<script>
+let ws;
+
+function connect() {
+    ws = new WebSocket("ws://localhost:8000/ws");
+
+    ws.onopen = () => {
+        console.log("🔌 Connected");
+    };
+
+    ws.onmessage = (event) => {
+        console.log("🤖 BOT:", event.data);
+    };
+}
+
+function sendMsg() {
+    const msg = "book appointment";
+
+    console.log("📤 SEND:", msg);
+
+    ws.send(msg);
+}
+</script>
+
+</body>
+</html>
